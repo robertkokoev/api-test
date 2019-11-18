@@ -6,10 +6,19 @@
   padding: 0 15px;
 }
 
-.btn-group-toggle label {
+.btn-group-toggle label, .search {
   margin: 2px 5px;
 }
 
-label {
-  box-sizing: border-box;
+.search {
+  width: 200px;
+}
+
+.card {
+  border: none;
+  margin-top: 20px;
+}
+
+.card-body {
+  padding: 10px 20px;
 }
