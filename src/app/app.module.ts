@@ -8,6 +8,7 @@ import { MainComponent } from './components/main/main.component';
 import { AbstractGenresService } from './services/abstract-genres.service';
 import { GenresService } from './services/genres.service';
 import { EllipsisPipe } from './pipes/ellipsis.pipe';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { EllipsisPipe } from './pipes/ellipsis.pipe';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     {provide: AbstractGenresService, useClass: GenresService}

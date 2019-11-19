@@ -1,83 +1,30 @@
 <main>
   <div class="container">
-    <div class="row">
-      <div class="btn-group-toggle text-center" data-toggle="buttons">
-        <label class="btn btn-outline-primary">
-          <input type="checkbox" name="options" id="option1" autocomplete="off"> Action
-        </label>
-        <label class="btn btn-outline-primary">
-          <input type="checkbox" name="options" id="option1" autocomplete="off"> Adventure
-        </label>
-        <label class="btn btn-outline-primary">
-          <input type="checkbox" name="options" id="option1" autocomplete="off"> Animation
-        </label>
-        <label class="btn btn-outline-primary">
-          <input type="checkbox" name="options" id="option1" autocomplete="off"> Comedy
-        </label>
-        <label class="btn btn-outline-primary">
-          <input type="checkbox" name="options" id="option1" autocomplete="off"> Crime
-        </label>
-        <label class="btn btn-outline-primary">
-          <input type="checkbox" name="options" id="option1" autocomplete="off"> Documentary
-        </label>  
-        <label class="btn btn-outline-primary">
-          <input type="checkbox" name="options" id="option1" autocomplete="off"> Drama
-        </label>
-        <label class="btn btn-outline-primary">
-          <input type="checkbox" name="options" id="option1" autocomplete="off"> Family
-        </label>
-        <label class="btn btn-outline-primary">
-          <input type="checkbox" name="options" id="option1" autocomplete="off"> Fantasy
-        </label>
-        <label class="btn btn-outline-primary">
-          <input type="checkbox" name="options" id="option1" autocomplete="off"> History
-        </label>
-        <label class="btn btn-outline-primary">
-          <input type="checkbox" name="options" id="option1" autocomplete="off"> Horror
-        </label>
-        <label class="btn btn-outline-primary">
-          <input type="checkbox" name="options" id="option1" autocomplete="off"> Music
-        </label>
-        <label class="btn btn-outline-primary">
-          <input type="checkbox" name="options" id="option1" autocomplete="off"> Mystery
-        </label>
-        <label class="btn btn-outline-primary">
-          <input type="checkbox" name="options" id="option1" autocomplete="off"> Romance
-        </label>  
-        <label class="btn btn-outline-primary">
-          <input type="checkbox" name="options" id="option1" autocomplete="off"> Science Fiction
-        </label>
-        <label class="btn btn-outline-primary">
-          <input type="checkbox" name="options" id="option1" autocomplete="off"> TV Movie
-        </label>
-        <label class="btn btn-outline-primary">
-          <input type="checkbox" name="options" id="option1" autocomplete="off"> Thriller
-        </label>
-        <label class="btn btn-outline-primary">
-          <input type="checkbox" name="options" id="option1" autocomplete="off"> War
-        </label>
-        <label class="btn btn-outline-primary">
-          <input type="checkbox" name="options" id="option1" autocomplete="off"> Western
+    <div class="text-center">
+      <div *ngFor="let genre of genres" class="d-inline-block">
+        <label>
+          <input type="checkbox" [(ngModel)]="genre.checked">
+          {{ genre.name }}
         </label>
       </div>
-    </div>
-
+    </div>   
     <div class="text-center">
       <button class="btn btn-success search" (click)="onSearchClick()">Search</button>
-    </div>  
+    </div> 
+    <hr> 
     
     <div class="row">
-      <div *ngFor="let x of films" class="col-6 card">
+      <div *ngFor="let x of films" class="col-lg-6 card">
         <div class="row no-gutters">
           <div class="col-4">
             <img src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{ x!.poster_path }}" class="card-img" alt="...">
           </div>
           <div class="col-8">
             <div class="card-body">
-              <h4>
+              <h5>
                 {{ x!.title }} <br>
                 <small class="text-muted">{{ x!.release_date | date: 'longDate'}}</small>
-              </h4>
+              </h5>
               <p class="card-text">{{ x!.overview | ellipsis }}</p>
             </div>
           </div>
