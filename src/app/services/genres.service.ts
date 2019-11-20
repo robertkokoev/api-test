@@ -1,4 +1,4 @@
-import { AbstractGenresService, Film } from './abstract-genres.service';
+import { AbstractGenresService, Film, Result } from './abstract-genres.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'
@@ -10,19 +10,13 @@ export class GenresService extends AbstractGenresService{
   }
 
   getFilms(query: string): Observable<any> {
-    // let films: Film[];
-    // return this.http
-    //   .get<Film[]>(query)
-    //   .pipe(map(data => {
-    //     return data.forEach<Film[]>(data => {
-    //       data.title = film.title;
-    //       data.overview = film.overview;
-    //       data.poster_path = film.poster_path;
-    //       data.realease_date = film.realease_date;
-    //       return film;
-    //     })
-    //   }));
+    let result: Result;
+    return this.http
+      .get<any>(query)
+      .pipe(map(data => {
+        return result = new Result(data.page, data.total_pages, data.results);
+      }));
 
-    return this.http.get(query);
+    // return this.http.get(query);
   }
 }

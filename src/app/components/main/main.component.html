@@ -12,18 +12,25 @@
       <button class="btn btn-success search" (click)="onSearchClick()">Search</button>
     </div> 
     <hr> 
+
+    <nav aria-label="Page navigation example">
+      <ul class="pagination pagination-sm">
+        <li class="page-item" *ngFor="let b of fill(totalPages)" (click)="onSearchClick(b+1)"><a class="page-link" href="#">{{ b + 1 }}</a></li>
+        <li class="page-item"><a class="page-link">...</a></li>
+      </ul>
+    </nav>
     
     <div class="row">
       <div *ngFor="let x of films" class="col-lg-6 card">
         <div class="row no-gutters">
           <div class="col-4">
-            <img src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{ x!.poster_path }}" class="card-img" alt="...">
+            <a (click)="onDetails(x.id)"><img src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{ x!.posterPath }}" class="card-img"></a>
           </div>
           <div class="col-8">
             <div class="card-body">
               <h5>
                 {{ x!.title }} <br>
-                <small class="text-muted">{{ x!.release_date | date: 'longDate'}}</small>
+                <small class="text-muted">{{ x!.releaseDate | date: 'longDate'}}</small>
               </h5>
               <p class="card-text">{{ x!.overview | ellipsis }}</p>
             </div>

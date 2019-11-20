@@ -8,13 +8,15 @@ import { MainComponent } from './components/main/main.component';
 import { AbstractGenresService } from './services/abstract-genres.service';
 import { GenresService } from './services/genres.service';
 import { EllipsisPipe } from './pipes/ellipsis.pipe';
+import { FillPipe } from './pipes/fill.pipe';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
-    EllipsisPipe
+    EllipsisPipe,
+    FillPipe
   ],
   imports: [
     BrowserModule,

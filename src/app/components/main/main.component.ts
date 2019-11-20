@@ -9,7 +9,14 @@ import { AbstractGenresService, Film } from 'src/app/services/abstract-genres.se
 })
 export class MainComponent implements OnInit {
 
+  query: string;
   films: any;
+  totalPages: number;
+  page: number;
+  pagesArr: number [] = [];
+  arr: number[] = [];
+  new: number[] = []; 
+
   genres = [
     {
       id: 28,
@@ -118,23 +125,42 @@ export class MainComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSearchClick(query: string) {
-
-    let genresId: string; 
-    // console.log(this.genres.filter(g => g.checked).map(g => g.id));
-    genresId = this.genres
+  onSearchClick(page: number) {
+    let genresId: string = this.genres
                 .filter(g => g.checked)
                 .map(g => g.id)
                 .join(',');
     
+    this.query = `https://api.themoviedb.org/3/discover/movie?api_key=d8c7ed05b2dc33a9f278b9a94ec333e8&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genresId}`;
 
-    query = `https://api.themoviedb.org/3/discover/movie?api_key=d8c7ed05b2dc33a9f278b9a94ec333e8&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=2&with_genres=${genresId}`;
-
-    // alert(query)
-
-    this.http.getFilms(query).subscribe(data => {
-      this.films = data.results;
+    this.http.getFilms(this.query).subscribe(data => {
+      this.page = data.page;
+      this.totalPages = data.totalPages;
+      this.films = data.films;
     })
+  }
+
+  onDetails(id: number) {
+    
+  }
+
+  fill(number: number) {
+    let current = this.page;
+
+    for (let i = 0; i < number; i++) {
+      this.arr.push(i);  
+    }
+
+    if (current > 3) {
+      this.new = this.arr.slice(current - 4, current + 3);
+    } else {
+      this.new = this.arr.slice(0, current + 5);
+    }
+    return this.new; 
+  }
+
+  onPageSelect(page: number) {
+
   }
 
 }

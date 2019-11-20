@@ -15,7 +15,6 @@ export class EllipsisPipe implements PipeTransform {
           break;
         }
       }
-      
     }
     return s;
   }
