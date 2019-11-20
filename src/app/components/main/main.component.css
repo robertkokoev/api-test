@@ -27,3 +27,21 @@ label {
   margin: 0;
   padding: 8px;
 }
+
+.close {
+  position: absolute;
+  top: 3px;
+  right: 5px;
+}
+
+.image img {
+  width: 100%;
+}
+
+.text, .info {
+  padding: 10px 15px
+}
+
+.modal-body {
+  padding: 0;
+}

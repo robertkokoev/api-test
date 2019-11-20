@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractGenresService, Film } from 'src/app/services/abstract-genres.service';
+import { AbstractDetailsService, Details } from 'src/app/services/abstract-details.service';
 
 
 @Component({
@@ -9,6 +10,9 @@ import { AbstractGenresService, Film } from 'src/app/services/abstract-genres.se
 })
 export class MainComponent implements OnInit {
 
+  details: Details;
+  detailsGenres;
+  countres;
   query: string;
   films: any;
   totalPages: number;
@@ -120,7 +124,7 @@ export class MainComponent implements OnInit {
     }
   ];
 
-  constructor(private http: AbstractGenresService) { }
+  constructor(private httpGenres: AbstractGenresService, private httpDetails: AbstractDetailsService) { }
 
   ngOnInit() {
   }
@@ -133,7 +137,7 @@ export class MainComponent implements OnInit {
     
     this.query = `https://api.themoviedb.org/3/discover/movie?api_key=d8c7ed05b2dc33a9f278b9a94ec333e8&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genresId}`;
 
-    this.http.getFilms(this.query).subscribe(data => {
+    this.httpGenres.getFilms(this.query).subscribe(data => {
       this.page = data.page;
       this.totalPages = data.totalPages;
       this.films = data.films;
@@ -141,7 +145,11 @@ export class MainComponent implements OnInit {
   }
 
   onDetails(id: number) {
-    
+    this.httpDetails.getDetails(id).subscribe(data => {
+      this.details = data;
+      this.detailsGenres = data.genres
+      this.countres = data.productionCountries;
+    })
   }
 
   fill(number: number) {
@@ -157,10 +165,6 @@ export class MainComponent implements OnInit {
       this.new = this.arr.slice(0, current + 5);
     }
     return this.new; 
-  }
-
-  onPageSelect(page: number) {
-
   }
 
 }
