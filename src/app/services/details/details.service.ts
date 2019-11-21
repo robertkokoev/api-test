@@ -5,8 +5,6 @@ import { Observable } from 'rxjs/internal/Observable';
 
 export class DetailsService extends AbstractDetailsService {
 
-  query: string = 'https://api.themoviedb.org/3/movie/{movie_id}?api_key=d8c7ed05b2dc33a9f278b9a94ec333e8'
-
   constructor(private http: HttpClient) {
     super();
   }

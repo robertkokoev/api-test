@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { ReceivedFilm } from './films.service';
 
 export abstract class AbstractFilmsService {
-  abstract getFilms(query: string): Observable<Result>
+  abstract getFilms(page: number, genresId: string): Observable<Result>
 }
 
 export class Result {

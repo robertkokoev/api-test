@@ -9,8 +9,10 @@ export class FilmsService extends AbstractFilmsService{
     super();
   }
 
-  getFilms(query: string): Observable<Result> {
+  getFilms(page: number, genresId: string): Observable<Result> {
     let result: Result;
+    let query = `https://api.themoviedb.org/3/discover/movie?api_key=d8c7ed05b2dc33a9f278b9a94ec333e8&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genresId}`;
+
     return this.http
       .get<any>(query)
       .pipe(map(data => {

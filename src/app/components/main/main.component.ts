@@ -11,17 +11,17 @@ import { GenreAdapter, GenresService } from 'src/app/services/genres/genres.serv
 })
 export class MainComponent implements OnInit {
 
-  details: Details;
-  detailsGenres: string[] = [];
-  countries: string[] = [];
-  query: string;
-  films: Film[];
-  totalPages: number;
-  page: number;
-  pagesArr: number [] = [];
-  arr: number[] = [];
-  new: number[] = []; 
-  genres: GenreAdapter[];
+  details:        Details;
+  detailsGenres:  string[] = [];
+  countries:      string[] = [];
+  query:          string;
+  films:          Film[];
+  totalPages:     number;
+  page:           number;
+  pagesArr:       number [] = [];
+  arr:            number[] = [];
+  new:            number[] = []; 
+  genres:         GenreAdapter[];
 
   constructor(
     private filmsService: AbstractFilmsService, 
@@ -41,9 +41,7 @@ export class MainComponent implements OnInit {
                 .map(g => g.id)
                 .join(',');
     
-    this.query = `https://api.themoviedb.org/3/discover/movie?api_key=d8c7ed05b2dc33a9f278b9a94ec333e8&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genresId}`;
-
-    this.filmsService.getFilms(this.query).subscribe(data => {
+    this.filmsService.getFilms(page, genresId).subscribe(data => {
       this.page = data.page;
       this.totalPages = data.totalPages;
       this.films = data.films;
