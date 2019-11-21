@@ -11,17 +11,21 @@ import { GenreAdapter, GenresService } from 'src/app/services/genres/genres.serv
 })
 export class MainComponent implements OnInit {
 
-  details:        Details;
-  detailsGenres:  string[] = [];
-  countries:      string[] = [];
-  query:          string;
-  films:          Film[];
-  totalPages:     number;
-  page:           number;
-  pagesArr:       number [] = [];
-  arr:            number[] = [];
-  new:            number[] = []; 
-  genres:         GenreAdapter[];
+  details: Details;
+  detailsGenres: string[] = [];
+  countries: string[] = [];
+  query: string;
+  key: string;
+  films: Film[];
+  next: boolean;
+  previous: boolean;
+  current: number;
+  totalPages: number;
+  page: number;
+  pagesArr: number [] = [];
+  arr: number[] = [];
+  new: number[] = []; 
+  genres: GenreAdapter[] = [];
 
   constructor(
     private filmsService: AbstractFilmsService, 
@@ -45,7 +49,14 @@ export class MainComponent implements OnInit {
       this.page = data.page;
       this.totalPages = data.totalPages;
       this.films = data.films;
-    })
+
+      if (this.page + 1 > this.totalPages) {
+        this.next = true;
+      } else this.next = false;
+      if (this.page - 1 < 1) {
+        this.previous = true;
+      } else this.previous = false;
+    });
   }
 
   showDetails(id: number) {
@@ -53,10 +64,12 @@ export class MainComponent implements OnInit {
       this.details = data;
       this.detailsGenres = data.genres
       this.countries = data.productionCountries;
-    })
+    });
   }
 
-  current: number;
+  makeDisabled() {
+    
+  }
 
   fill(number: number) {
     this.current = this.page;
@@ -67,7 +80,7 @@ export class MainComponent implements OnInit {
 
     if ((this.totalPages > 3) && (this.current > 2) && (this.current <= this.totalPages - 3)) {
       this.new = this.arr.slice(this.current - 3, this.current + 2);
-    } else if ((this.totalPages < 3) && (this.current < 2)) {
+    } else if ((this.totalPages < 3) && (this.current < 3)) {
       this.new = this.arr.slice(0, this.totalPages);
     } else if ((this.totalPages > 5) && (this.current < 4)) {
       this.new = this.arr.slice(0, 5);

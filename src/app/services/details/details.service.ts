@@ -10,12 +10,15 @@ export class DetailsService extends AbstractDetailsService {
   }
 
   getDetails(id: number): Observable<Details> {
-    let details: Details;
+    let genres: string[] = [];
+    let countries: string[] = [];
 
     return this.http
       .get<any>(`https://api.themoviedb.org/3/movie/${id}?api_key=d8c7ed05b2dc33a9f278b9a94ec333e8`)
       .pipe(map(data => {
-        return details = new Details(data.budget, data.genres, data.overview, data.poster_path, data.production_countries, data.release_date, data.runtime, data.title)
+        data.genres.map(g => genres.push(g.name));
+        data.production_countries.map(c => countries.push(c.name));
+        return new Details(data.budget, genres, data.overview, data.poster_path, countries, data.release_date, data.runtime, data.title)
       }));
   }
 }
