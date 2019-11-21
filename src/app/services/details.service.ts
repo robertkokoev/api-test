@@ -1,6 +1,7 @@
 import { AbstractDetailsService, Details } from './abstract-details.service';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs/internal/Observable';
 
 export class DetailsService extends AbstractDetailsService {
 
@@ -10,7 +11,7 @@ export class DetailsService extends AbstractDetailsService {
     super();
   }
 
-  getDetails(id: number) {
+  getDetails(id: number): Observable<Details> {
     let details: Details;
 
     return this.http

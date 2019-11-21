@@ -76,7 +76,7 @@
       <div *ngFor="let x of films" class="col-lg-6 card">
         <div class="row no-gutters">
           <div class="col-4">
-            <a (click)="onDetails(x.id)" data-toggle="modal" data-target="#exampleModal"><img src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{ x!.posterPath }}" class="card-img"></a>
+            <a (click)="onDetails(x.id)" data-toggle="modal" data-target="#exampleModal"><img src="https://image.tmdb.org/t/p/w370_and_h556_bestv2{{ x!.posterPath }}" class="card-img"></a>
           </div>
           <div class="col-8">
             <div class="card-body">

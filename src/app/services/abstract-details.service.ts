@@ -1,5 +1,7 @@
+import { Observable } from 'rxjs';
+
 export abstract class AbstractDetailsService {
-  abstract getDetails(id: number)
+  abstract getDetails(id: number): Observable<Details>
 }
 
 export class Details {

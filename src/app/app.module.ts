@@ -5,13 +5,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MainComponent } from './components/main/main.component';
-import { AbstractGenresService } from './services/abstract-genres.service';
+import { AbstractFilmsService } from './services/abstract-films.service';
 import { FilmsService } from './services/films.service';
 import { EllipsisPipe } from './pipes/ellipsis.pipe';
 import { FillPipe } from './pipes/fill.pipe';
 import { FormsModule } from '@angular/forms';
 import { DetailsService } from './services/details.service';
 import { AbstractDetailsService } from './services/abstract-details.service';
+import { GenresService } from './services/genres.service';
 
 @NgModule({
   declarations: [
@@ -27,8 +28,9 @@ import { AbstractDetailsService } from './services/abstract-details.service';
     FormsModule
   ],
   providers: [
-    { provide: AbstractGenresService, useClass: FilmsService },
-    { provide: AbstractDetailsService, useClass: DetailsService }
+    { provide: AbstractFilmsService, useClass: FilmsService },
+    { provide: AbstractDetailsService, useClass: DetailsService },
+    GenresService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractGenresService, Film } from 'src/app/services/abstract-genres.service';
+import { AbstractFilmsService, Film } from 'src/app/services/abstract-films.service';
 import { AbstractDetailsService, Details } from 'src/app/services/abstract-details.service';
+import { GenreAdapter, GenresService } from 'src/app/services/genres.service';
 
 
 @Component({
@@ -11,122 +12,27 @@ import { AbstractDetailsService, Details } from 'src/app/services/abstract-detai
 export class MainComponent implements OnInit {
 
   details: Details;
-  detailsGenres;
-  countres;
+  detailsGenres: string[] = [];
+  countres: string[] = [];
   query: string;
-  films: any;
+  films: Film[] = [];
   totalPages: number;
   page: number;
   pagesArr: number [] = [];
   arr: number[] = [];
   new: number[] = []; 
+  genres: GenreAdapter[];
 
-  genres = [
-    {
-      id: 28,
-      name: 'Action',
-      checked: false
-    },
-    {
-      id: 12,
-      name: 'Adventure',
-      checked: false
-    },
-    {
-      id: 16,
-      name: 'Animaion',
-      checked: false
-    },
-    {
-      id: 35,
-      name: 'Comedy',
-      checked: false
-    },
-    {
-      id: 12,
-      name: 'Adventure',
-      checked: false
-    },
-    {
-      id: 80,
-      name: 'Crime',
-      checked: false
-    },
-    {
-      id: 99,
-      name: 'Documentary',
-      checked: false
-    },
-    {
-      id: 18,
-      name: 'Drama',
-      checked: false
-    },
-    {
-      id: 10751,
-      name: 'Family',
-      checked: false
-    },
-    {
-      id: 14,
-      name: 'Fantasy',
-      checked: false
-    },
-    {
-      id: 36,
-      name: 'History',
-      checked: false
-    },
-    {
-      id: 27,
-      name: 'Horror',
-      checked: false
-    },
-    {
-      id: 10402,
-      name: 'Music',
-      checked: false
-    },
-    {
-      id: 9648,
-      name: 'Mistery',
-      checked: false
-    },
-    {
-      id: 10749,
-      name: 'Romance',
-      checked: false
-    },
-    {
-      id: 878,
-      name: 'Science Fiction',
-      checked: false
-    },
-    {
-      id: 10770,
-      name: 'TV Movie',
-      checked: false
-    },
-    {
-      id: 53,
-      name: 'Thriller',
-      checked: false
-    },
-    {
-      id: 10752,
-      name: 'War',
-      checked: false
-    },
-    {
-      id: 37,
-      name: 'Western',
-      checked: false
-    }
-  ];
-
-  constructor(private httpGenres: AbstractGenresService, private httpDetails: AbstractDetailsService) { }
+  constructor(
+    private filmsService: AbstractFilmsService, 
+    private detailsService: AbstractDetailsService,
+    private genresService: GenresService
+    ) { }
 
   ngOnInit() {
+    this.genresService.getGenres().subscribe(data => {
+      this.genres = data;
+    })
   }
 
   onSearchClick(page: number) {
@@ -137,7 +43,7 @@ export class MainComponent implements OnInit {
     
     this.query = `https://api.themoviedb.org/3/discover/movie?api_key=d8c7ed05b2dc33a9f278b9a94ec333e8&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}&with_genres=${genresId}`;
 
-    this.httpGenres.getFilms(this.query).subscribe(data => {
+    this.filmsService.getFilms(this.query).subscribe(data => {
       this.page = data.page;
       this.totalPages = data.totalPages;
       this.films = data.films;
@@ -145,7 +51,7 @@ export class MainComponent implements OnInit {
   }
 
   onDetails(id: number) {
-    this.httpDetails.getDetails(id).subscribe(data => {
+    this.detailsService.getDetails(id).subscribe(data => {
       this.details = data;
       this.detailsGenres = data.genres
       this.countres = data.productionCountries;
