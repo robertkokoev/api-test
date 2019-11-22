@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractFilmsService, Film } from 'src/app/services/films/abstract-films.service';
 import { AbstractDetailsService, Details } from 'src/app/services/details/abstract-details.service';
 import { GenreAdapter, GenresService } from 'src/app/services/genres/genres.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -30,13 +33,40 @@ export class MainComponent implements OnInit {
   constructor(
     private filmsService: AbstractFilmsService, 
     private detailsService: AbstractDetailsService,
-    private genresService: GenresService
+    private genresService: GenresService,
+    public dialog: MatDialog
     ) { }
 
   ngOnInit() {
     this.genresService.getGenres().subscribe(data => {
       this.genres = data;
     });
+  }
+
+  openDialog(id: number) : void {
+
+    this.showDetails(id).subscribe(() => {
+      const dialogRef = this.dialog.open(DialogComponent, {
+        width: '60%',
+        data: { 
+          budget: this.details.budget,
+          genres: this.detailsGenres,
+          overview: this.details.overview,
+          posterPath: this.details.posterPath,
+          productionCountries: this.countries,
+          releaseDate: this.details.releaseDate,
+          runtime: this.details.runtime,
+          title: this.details.title
+        }
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        this.details = undefined;
+        this.detailsGenres = undefined;
+        this.countries = undefined;
+      });
+    });
+    
   }
 
   onSearchClick(page: number) {
@@ -49,22 +79,26 @@ export class MainComponent implements OnInit {
       this.page = data.page;
       this.totalPages = data.totalPages;
       this.films = data.films;
-
-      if (this.page + 1 > this.totalPages) {
-        this.next = true;
-      } else this.next = false;
-      if (this.page - 1 < 1) {
-        this.previous = true;
-      } else this.previous = false;
     });
   }
 
   showDetails(id: number) {
-    this.detailsService.getDetails(id).subscribe(data => {
-      this.details = data;
-      this.detailsGenres = data.genres
-      this.countries = data.productionCountries;
-    });
+    try {
+      return new Observable(observer => {
+        this.detailsService.getDetails(id).subscribe(data => {
+          if (data) {
+            this.details = data;
+            this.detailsGenres = data.genres
+            this.countries = data.productionCountries;  
+          } else console.log('Sosat');
+          observer.next();
+        });
+      })
+    } 
+    catch (error){
+      console.log(error);
+    }
+    
   }
 
   makeDisabled() {

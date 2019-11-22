@@ -1,0 +1,30 @@
+.grid {
+  display: grid;
+  grid-auto-columns: 1fr 2fr;
+  grid-gap: 10px;
+  grid-template-areas: "image text"
+                       "info info";
+  padding: 10px;
+}
+
+.image { 
+  grid-area: image;
+}
+
+.image img {
+  width: 100%;
+}
+
+.text {
+  grid-area: text;
+}
+
+.info {
+  grid-area: info;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.info h3 {
+  margin: 10px 0;
+}

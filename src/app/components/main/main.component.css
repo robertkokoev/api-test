@@ -1,47 +1,66 @@
-.card-deck { 
-  margin-top: 30px;
+.container { 
+  padding: 0 10%;
 }
 
-.btn-group-toggle {
-  padding: 0 15px;
-}
-
-.btn-group-toggle label, .search {
-  margin: 2px 5px;
-}
-
-.search {
-  width: 200px;
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  grid-gap: 20px;
 }
 
 .card {
-  border: none;
-  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-areas: "image text";
+  box-shadow: none;
 }
 
-.card-body {
-  padding: 10px 20px;
+.image {
+  grid-area: image;
 }
 
-label {
+.text {
+  grid-area: text;
+  padding-top: 8px;
+}
+
+.text-center {
+  display: inline-block;
+  text-align: center;
+}
+
+.genres label {
+  width: 50px;
   margin: 0;
-  padding: 8px;
-}
-
-.close {
-  position: absolute;
-  top: 3px;
-  right: 5px;
+  padding: 0 8px;
 }
 
 .image img {
   width: 100%;
 }
 
-.text, .info {
-  padding: 10px 15px
-}
 
 .modal-body {
   padding: 0;
+}
+
+.mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+  line-height: none !important;
+  padding: 0 12px;
+}
+
+mat-card img {
+  margin: 0 !important
+}
+
+mat-card {
+  padding: 0;
+}
+
+mat-card-content {
+  margin: 1rem;
+}
+
+mat-button-toggle-group {
+  margin-bottom: 20px;
 }

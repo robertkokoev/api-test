@@ -1,0 +1,31 @@
+<div mat-dialog-content class="grid">
+  <div class="image">
+    <img src="https://image.tmdb.org/t/p/w600_and_h900_bestv2{{ data.posterPath }}">
+  </div>
+  <div class="text">
+    <h3 class="modal-title" id="exampleModalLabel">
+      {{ data.title }} <br>
+      <small class="modal-subtitle">{{ data.releaseDate | date: 'longDate'}}</small>
+    </h3> <br>
+    <h4>Overview</h4>
+    <p> {{ data.overview }} </p>
+  </div>
+  <div class="info">
+    <div>
+      <h3>Countries</h3>
+      <mat-chip-list>
+        <mat-chip *ngFor="let c of data.productionCountries"> {{ c }} </mat-chip>
+      </mat-chip-list>
+    </div>
+    <div>
+      <h3>Genres</h3>
+      <mat-chip-list>
+        <mat-chip *ngFor="let g of data.genres"> {{ g }} </mat-chip>  
+      </mat-chip-list>
+    </div>
+    <div class="col-4">
+      <h5>Budget - {{ data.budget | currency}}</h5>
+      <h5>Runtime - {{ data.runtime }} minutes</h5>
+    </div>
+  </div>
+</div>
