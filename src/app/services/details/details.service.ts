@@ -18,8 +18,7 @@ export class DetailsService extends AbstractDetailsService {
       .pipe(map(data => {
         data.genres.map(g => genres.push(g.name));
         data.production_countries.map(c => countries.push(c.name));
-        return new Details(data.budget, genres, data.overview, data.poster_path, countries, data.release_date, data.runtime, data.title)
-        // return data;
+        return new Details(data.budget, genres, data.overview, data.poster_path, countries, data.release_date, data.runtime, data.title, data.vote_average)
       }));
   }
 }

@@ -1,26 +1,42 @@
 <main>
   <div class="container">
-    <div class="genres">
-      <div *ngFor="let genre of genres" class="text-center">
-        <label>
+    <div>
+      <div class="genres">
+        <label *ngFor="let genre of genres">
           <mat-checkbox [(ngModel)]="genre.checked">{{ genre.name }}</mat-checkbox>
         </label >      
       </div>   
-      <div>
+      <div class="search">
+        <label>
+          <mat-checkbox [(ngModel)]="adult">Show adult movies</mat-checkbox>
+        </label>
         <button mat-raised-button color="primary" (click)="onSearchClick()">Search</button>
+        <mat-form-field>
+          <mat-label>Sort by</mat-label>
+          <mat-select disableRipple [(value)]="sorting">
+            <mat-option value="popularity.asc">Popularuty asc&#8593;</mat-option>
+            <mat-option value="popularity.desc">Popularuty desc&#8595;</mat-option>
+            <mat-option value="release_date.asc">Release asc&#8593;</mat-option>
+            <mat-option value="release_date.desc">Release desc&#8595;</mat-option>
+            <mat-option value="vote_average.asc">Vote Average asc&#8593;</mat-option>
+            <mat-option value="vote_average.desc">Vote Average desc&#8595;</mat-option>
+          </mat-select>
+        </mat-form-field>
       </div> 
     </div>
 
     <hr> 
 
-    <mat-button-toggle-group *ngIf="totalPages">
-      <button mat-stroked-button (click)="onSearchClick(1)">Начало</button>
-      <mat-button-toggle *ngFor="let b of fill(totalPages)" (click)="onSearchClick(b+1)">{{ b + 1 }}</mat-button-toggle>
-      <span *ngIf="current <= totalPages - 3">...</span>
-      <mat-button-toggle *ngIf="current <= totalPages - 3" (click)="onSearchClick(totalPages)">{{ totalPages }}</mat-button-toggle>
+    <mat-button-toggle-group *ngIf="totalPages" class="pages">
+      <!-- <button mat-stroked-button (click)="onSearchClick(1)">Начало</button> -->
+      <mat-button-toggle checked (click)="onSearchClick(1)">1</mat-button-toggle>
+      <span>   </span>
+      <mat-button-toggle *ngFor="let b of fill(totalPages)" (click)="onSearchClick(b)">{{ b }}</mat-button-toggle>
+      <mat-button-toggle disabled *ngIf="current <= totalPages - 3">...</mat-button-toggle>
+      <mat-button-toggle (click)="onSearchClick(totalPages)" *ngIf="totalPages > 1">{{ totalPages }}</mat-button-toggle>
     </mat-button-toggle-group>
     
-    <div class="cards" *ngIf="totalPages; else void">
+    <div class="cards" *ngIf="totalPages != []; else void">
       <mat-card *ngFor="let x of films" class="card">
         <div class="image" (click)="openDialog(x.id)">
           <img src="https://image.tmdb.org/t/p/w370_and_h556_bestv2{{ x!.posterPath }}" class="card-img">
@@ -37,6 +53,6 @@
       </mat-card>
     </div>
 
-    <ng-template #void> <h1>Пуcтота...</h1> </ng-template>
+    <ng-template #void> <h1 style="text-align: center;">К сожалению нет таких крутых фильмов (точно не здесь)...</h1> </ng-template>
   </div>
 </main>

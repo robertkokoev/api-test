@@ -15,11 +15,14 @@ import { Observable } from 'rxjs';
 export class MainComponent implements OnInit {
 
   details: Details;
-  detailsGenres: string[] = [];
-  countries: string[] = [];
+  films: Film[];
+  genres: GenreAdapter[] = [];
   query: string;
   key: string;
-  films: Film[];
+  sorting: string = 'popularity.desc';
+  detailsGenres: string[] = [];
+  countries: string[] = [];
+  adult: boolean;
   next: boolean;
   previous: boolean;
   current: number;
@@ -28,7 +31,6 @@ export class MainComponent implements OnInit {
   pagesArr: number [] = [];
   arr: number[] = [];
   new: number[] = []; 
-  genres: GenreAdapter[] = [];
 
   constructor(
     private filmsService: AbstractFilmsService, 
@@ -45,7 +47,7 @@ export class MainComponent implements OnInit {
 
   openDialog(id: number) : void {
 
-    this.showDetails(id).subscribe(() => {
+    this.getDetails(id).subscribe(() => {
       const dialogRef = this.dialog.open(DialogComponent, {
         width: '60%',
         data: { 
@@ -56,7 +58,8 @@ export class MainComponent implements OnInit {
           productionCountries: this.countries,
           releaseDate: this.details.releaseDate,
           runtime: this.details.runtime,
-          title: this.details.title
+          title: this.details.title,
+          voteAverage: this.details.voteAverage
         }
       });
   
@@ -75,14 +78,14 @@ export class MainComponent implements OnInit {
                 .map(g => g.id)
                 .join(',');
     
-    this.filmsService.getFilms(page, genresId).subscribe(data => {
+    this.filmsService.getFilms(page, genresId, this.sorting, this.adult).subscribe(data => {
       this.page = data.page;
       this.totalPages = data.totalPages;
       this.films = data.films;
     });
   }
 
-  showDetails(id: number) {
+  getDetails(id: number) {
     try {
       return new Observable(observer => {
         this.detailsService.getDetails(id).subscribe(data => {
@@ -101,19 +104,17 @@ export class MainComponent implements OnInit {
     
   }
 
-  makeDisabled() {
-    
-  }
-
   fill(number: number) {
     this.current = this.page;
+    this.new = [];
+    this.arr = [];
 
-    for (let i = 0; i < number; i++) {
+    for (let i = 2; i < number; i++) {
       this.arr.push(i);  
     }
 
-    if ((this.totalPages > 3) && (this.current > 2) && (this.current <= this.totalPages - 3)) {
-      this.new = this.arr.slice(this.current - 3, this.current + 2);
+    if ((this.totalPages > 3) && (this.current > 3) && (this.current <= this.totalPages)) {
+      this.new = this.arr.slice(this.current - 4, this.current + 1);
     } else if ((this.totalPages < 3) && (this.current < 3)) {
       this.new = this.arr.slice(0, this.totalPages);
     } else if ((this.totalPages > 5) && (this.current < 4)) {

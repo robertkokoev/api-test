@@ -14,6 +14,7 @@ export class Details {
     public productionCountries: string[],
     public releaseDate: string,
     public runtime: number,
-    public title: string) { }
+    public title: string,
+    public voteAverage: number) { }
 
 }
