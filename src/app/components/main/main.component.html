@@ -38,7 +38,8 @@
     <div class="cards" *ngIf="totalPages != []; else void">
       <mat-card *ngFor="let x of films" class="card">
         <div class="image" (click)="openDialog(x.id)">
-          <img src="https://image.tmdb.org/t/p/w370_and_h556_bestv2{{ x!.posterPath }}" class="card-img">
+          <img *ngIf="x.posterPath; else default" src="https://image.tmdb.org/t/p/w370_and_h556_bestv2{{ x!.posterPath }}" class="card-img">
+          <ng-template #default> <img height="100%" src="..\assets\default_image.jpg"> </ng-template>
           <div class="effect"> See more </div>
         </div>
         <div class="text">

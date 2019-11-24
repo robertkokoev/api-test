@@ -1,6 +1,7 @@
 <div mat-dialog-content class="grid">
   <div class="image">
-    <img src="https://image.tmdb.org/t/p/w600_and_h900_bestv2{{ data.posterPath }}">
+    <img *ngIf="data.posterPath; else default" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2{{ data.posterPath }}">
+    <ng-template #default><img height="100%" src="..\assets\default_image.jpg"></ng-template>
   </div>
   <div class="text">
     <h3 mat-dialog-title>

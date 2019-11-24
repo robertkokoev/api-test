@@ -13,7 +13,7 @@ export class GenresService {
       .get<Genre[]>('../assets/test-data/genres.json')
       .pipe(map(data => {
         return data.map(d => {
-          return Object.assign(d, { checked: false }) as GenreAdapter})
+          return Object.assign(d, { checked: false }) as GenreAdapter});
       }));
   }
 }
