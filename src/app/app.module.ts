@@ -16,7 +16,6 @@ import { MainComponent } from './components/main/main.component';
 import { AbstractFilmsService } from './services/films/abstract-films.service';
 import { FilmsService } from './services/films/films.service';
 import { EllipsisPipe } from './pipes/ellipsis.pipe';
-import { FillPipe } from './pipes/fill.pipe';
 import { FormsModule } from '@angular/forms';
 import { DetailsService } from './services/details/details.service';
 import { AbstractDetailsService } from './services/details/abstract-details.service';
@@ -30,7 +29,6 @@ import { DialogComponent } from './components/dialog/dialog.component';
     AppComponent,
     MainComponent,
     EllipsisPipe,
-    FillPipe,
     DialogComponent
   ],
   imports: [

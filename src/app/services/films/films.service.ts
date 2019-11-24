@@ -16,7 +16,7 @@ export class FilmsService extends AbstractFilmsService{
     return this.http
       .get<any>(query)
       .pipe(map(data => {
-        const films = data.results.map(f => new Film(f));
+        const films = data.results.map((f: ReceivedFilm) => new Film(f));
         return result = new Result(data.page, data.total_pages, films);
       }));
   }

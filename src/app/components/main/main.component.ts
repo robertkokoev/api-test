@@ -45,8 +45,7 @@ export class MainComponent implements OnInit {
     });
   }
 
-  openDialog(id: number) : void {
-
+  openDialog(id: number): void {
     this.getDetails(id).subscribe(() => {
       const dialogRef = this.dialog.open(DialogComponent, {
         width: '60%',
@@ -63,16 +62,28 @@ export class MainComponent implements OnInit {
         }
       });
   
-      dialogRef.afterClosed().subscribe(result => {
+      dialogRef.afterClosed().subscribe(() => {
         this.details = undefined;
         this.detailsGenres = undefined;
         this.countries = undefined;
       });
     });
-    
   }
 
-  onSearchClick(page: number) {
+  getDetails(id: number): Observable<Details> {
+    return new Observable(observer => {
+      this.detailsService.getDetails(id).subscribe(data => {
+        if (data) {
+          this.details = data;
+          this.detailsGenres = data.genres
+          this.countries = data.productionCountries;  
+        }
+        observer.next();
+      });
+    })
+  }
+
+  onSearchClick(page: number): void {
     let genresId: string = this.genres
                 .filter(g => g.checked)
                 .map(g => g.id)
@@ -85,26 +96,7 @@ export class MainComponent implements OnInit {
     });
   }
 
-  getDetails(id: number) {
-    try {
-      return new Observable(observer => {
-        this.detailsService.getDetails(id).subscribe(data => {
-          if (data) {
-            this.details = data;
-            this.detailsGenres = data.genres
-            this.countries = data.productionCountries;  
-          } else console.log('Sosat');
-          observer.next();
-        });
-      })
-    } 
-    catch (error){
-      console.log(error);
-    }
-    
-  }
-
-  fill(number: number) {
+  fill(number: number): number[] {
     this.current = this.page;
     this.new = [];
     this.arr = [];

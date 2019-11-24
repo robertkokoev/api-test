@@ -39,6 +39,36 @@
 
 .image {
   grid-area: image;
+  position: relative;
+}
+
+.image img, .effect {
+  width: 100%;
+  overflow: hidden;
+}
+
+.image:hover {
+  cursor: pointer;
+}
+
+.image:hover .effect {
+  opacity: 1;
+}
+
+.effect {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  opacity: 0;
+  transition: .3s;
+  position: absolute;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  font-weight: 300;
+  padding: 5px;
+  box-sizing: border-box;
+  bottom: 4px;
 }
 
 .text {
@@ -61,10 +91,6 @@
   display: block;
   margin: 0;
   padding: 0 8px;
-}
-
-.image img {
-  width: 100%;
 }
 
 .modal-body {
@@ -94,5 +120,5 @@ mat-button-toggle-group {
 
 [disabled] {
   color: black;
-  background-color: #eee;
+  background-color: rgb(238, 238, 238);
 }
