@@ -5,6 +5,7 @@ import { GenreAdapter, GenresService } from 'src/app/services/genres/genres.serv
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 import { Observable } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { Observable } from 'rxjs';
 })
 export class MainComponent implements OnInit {
   details: Details;
-  films: Film[];
+  films: Film[] = [];
   genres: GenreAdapter[] = [];
   sorting: string = "popularity.desc";
   detailsGenres: string[] = [];
@@ -37,6 +38,8 @@ export class MainComponent implements OnInit {
     this.genresService.getGenres().subscribe(data => {
       this.genres = data;
     });
+
+    this.onSearchClick(1);
   }
 
   openDialog(id: number): void {
@@ -78,6 +81,7 @@ export class MainComponent implements OnInit {
   }
 
   onSearchClick(page: number): void {
+    this.films = [];
     let genresId: string = this.genres
       .filter(g => g.checked)
       .map(g => g.id)
@@ -85,6 +89,7 @@ export class MainComponent implements OnInit {
 
     this.filmsService
       .getFilms(page, genresId, this.sorting, this.adult)
+      .pipe(delay(500))
       .subscribe(data => {
         this.page = data.page;
         this.totalPages = data.totalPages;

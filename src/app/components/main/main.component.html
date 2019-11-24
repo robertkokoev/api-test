@@ -1,5 +1,5 @@
 <main>
-  <div class="container">
+  <div class="container" id="container">
     <div>
       <h2 style="text-align: center;">Movie Base</h2>
       <div class="genres">
@@ -28,34 +28,37 @@
 
     <hr> 
 
-    <mat-button-toggle-group *ngIf="totalPages" class="pages">
-      <mat-button-toggle checked (click)="onSearchClick(1)">1</mat-button-toggle>
-      <mat-button-toggle *ngFor="let b of fill(totalPages)" (click)="onSearchClick(b)">{{ b }}</mat-button-toggle>
-      <mat-button-toggle disabled *ngIf="current <= totalPages - 3">...</mat-button-toggle>
-      <mat-button-toggle (click)="onSearchClick(totalPages)" *ngIf="totalPages > 1">{{ totalPages }}</mat-button-toggle>
-    </mat-button-toggle-group>
-    
-    <div class="cards" *ngIf="totalPages != []; else void">
-      <mat-card *ngFor="let x of films" class="card">
-        <div class="image" (click)="openDialog(x.id)">
-          <img *ngIf="x.posterPath; else default" src="https://image.tmdb.org/t/p/w370_and_h556_bestv2{{ x!.posterPath }}" class="card-img">
-          <ng-template #default> <img height="100%" src="..\assets\default_image.jpg"> </ng-template>
-          <div class="effect"> See more </div>
-        </div>
-        <div class="text">
-          <mat-card-header>
-            <mat-card-title>{{ x!.title }}</mat-card-title>
-            <mat-card-subtitle>{{ x!.releaseDate | date: 'longDate'}}</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-            <p>{{ x!.overview | ellipsis }}</p>
-          </mat-card-content>
-        </div>
-      </mat-card>
-    </div>
+    <div class="films">
+      <div class="preloadWrapper"><mat-spinner id="preloader" *ngIf="!films.length"></mat-spinner></div>
+      <mat-button-toggle-group *ngIf="totalPages" class="pages">
+        <mat-button-toggle checked (click)="onSearchClick(1)">1</mat-button-toggle>
+        <mat-button-toggle *ngFor="let b of fill(totalPages)" (click)="onSearchClick(b)">{{ b }}</mat-button-toggle>
+        <mat-button-toggle disabled *ngIf="current <= totalPages - 3">...</mat-button-toggle>
+        <mat-button-toggle (click)="onSearchClick(totalPages)" *ngIf="totalPages > 1">{{ totalPages }}</mat-button-toggle>
+      </mat-button-toggle-group>
+      
+      <div class="cards" *ngIf="totalPages != []; else void">
+        <mat-card *ngFor="let x of films" class="card">
+          <div class="image" (click)="openDialog(x.id)">
+            <img *ngIf="x.posterPath; else default" src="https://image.tmdb.org/t/p/w370_and_h556_bestv2{{ x!.posterPath }}" class="card-img">
+            <ng-template #default> <img height="100%" src="..\assets\default_image.jpg"> </ng-template>
+            <div class="effect"> See more </div>
+          </div>
+          <div class="text">
+            <mat-card-header>
+              <mat-card-title>{{ x!.title }}</mat-card-title>
+              <mat-card-subtitle>{{ x!.releaseDate | date: 'longDate'}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+              <p>{{ x!.overview | ellipsis }}</p>
+            </mat-card-content>
+          </div>
+        </mat-card>
+      </div>
 
-    <ng-template #void> 
-      <h1 style="text-align: center;">К сожалению нет таких крутых фильмов (точно не здесь)...</h1> 
-    </ng-template>
+      <ng-template #void> 
+        <h1 style="text-align: center;">К сожалению нет таких крутых фильмов (точно не здесь)...</h1> 
+      </ng-template>
+    </div>
   </div>
 </main>
