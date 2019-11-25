@@ -2,8 +2,11 @@ import { AbstractDetailsService, Details } from './abstract-details.service';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
+import { environment } from 'src/environments/environment';
 
 export class DetailsService extends AbstractDetailsService {
+
+  api = environment.detailsApiUrl;
 
   constructor(private http: HttpClient) {
     super();
@@ -11,7 +14,7 @@ export class DetailsService extends AbstractDetailsService {
 
   getDetails(id: number): Observable<Details> {
     return this.http
-      .get<any>(`https://api.themoviedb.org/3/movie/${id}?api_key=d8c7ed05b2dc33a9f278b9a94ec333e8`)
+      .get<any>(this.api + id.toString())
       .pipe(map(data => {
         const genres: string[] = data.genres.map(g => g.name);
         const countries: string[] = data.production_countries.map(c => c.name);

@@ -7,8 +7,8 @@ export abstract class AbstractFilmsService {
 
 export class Result {
   constructor(
-    public page: number, 
-    public totalPages: number, 
+    public page: number,
+    public totalPages: number,
     public films: Film[]
   ) {  }
 }
@@ -21,7 +21,7 @@ export class Film {
   overview: string;
   posterPath: string;
 
-  constructor(receivedFilm: ReceivedFilm) { 
+  constructor(receivedFilm: ReceivedFilm) {
     this.id = receivedFilm.id;
     this.title = receivedFilm.title;
     this.releaseDate = receivedFilm.release_date;

@@ -20,7 +20,7 @@ export class MainComponent implements OnInit {
   sorting: string = "popularity.desc";
   detailsGenres: string[] = [];
   countries: string[] = [];
-  adult: boolean;
+  adult: boolean = false;
   current: number;
   totalPages: number;
   page: number;

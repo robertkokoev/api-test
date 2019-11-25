@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatButtonModule} from '@angular/material/button';
@@ -24,6 +24,7 @@ import { GenresService } from './services/genres/genres.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCommonModule } from '@angular/material/core';
 import { DialogComponent } from './components/dialog/dialog.component';
+import { Interceptor} from './services/interceptor';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { DialogComponent } from './components/dialog/dialog.component';
   providers: [
     { provide: AbstractFilmsService, useClass: FilmsService },
     { provide: AbstractDetailsService, useClass: DetailsService },
+    { provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true },
     GenresService
   ],
   bootstrap: [AppComponent],

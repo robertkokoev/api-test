@@ -2,18 +2,26 @@ import { AbstractFilmsService, Film, Result } from './abstract-films.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
-export class FilmsService extends AbstractFilmsService{
+export class FilmsService extends AbstractFilmsService {
+
+  api = environment.filmsApiUrl;
 
   constructor(private http: HttpClient) {
     super();
   }
 
   getFilms(page: number, genresId: string, sorting: string, adult: boolean): Observable<Result> {
-    let query = `https://api.themoviedb.org/3/discover/movie?api_key=d8c7ed05b2dc33a9f278b9a94ec333e8&sort_by=${sorting}&include_adult=${adult}&page=${page}&with_genres=${genresId}`;
-
     return this.http
-      .get<any>(query)
+      .get<any>(this.api, {
+        params: {
+          sort_by: sorting,
+          include_adult: adult.toString(),
+          page: page.toString(),
+          with_genres: genresId
+        }
+      })
       .pipe(map(data => {
         const films = data.results.map((f: ReceivedFilm) => new Film(f));
         return new Result(data.page, data.total_pages, films);

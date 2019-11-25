@@ -11,7 +11,7 @@
         <label>
           <mat-checkbox [(ngModel)]="adult">Show adult movies</mat-checkbox>
         </label>
-        <button mat-raised-button color="primary" (click)="onSearchClick()">Search</button>
+        <button mat-raised-button color="primary" (click)="onSearchClick(1)">Search</button>
         <mat-form-field>
           <mat-label>Sort by</mat-label>
           <mat-select disableRipple [(value)]="sorting">
